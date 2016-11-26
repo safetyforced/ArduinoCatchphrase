@@ -10,7 +10,6 @@ boolean ledOn1 = false;
 boolean ledOn2 = false;
 
 void setup() {
-  // put your setup code here, to run once:
 pinMode(switchPin1, INPUT);
 pinMode(switchPin2, INPUT);
 pinMode(ledPin1, OUTPUT);
@@ -25,17 +24,8 @@ boolean debounce(boolean last, char button) {
   }
   return current;
 }
-//boolean debounce2(boolean last) {
-//  boolean current = digitalRead(switchPin2);
-//  if (last != current){
-//    delay(5);
-//    current = digitalRead(switchPin2);
-//  }
-//  return current;
-//}
 
 void loop() {
-  // put your main code here, to run repeatedly:
   currentButton1 = debounce(lastButton1, switchPin1);
 if (currentButton1 == HIGH  && lastButton1 == LOW) {
 ledOn1 = !ledOn1;
