@@ -1,6 +1,6 @@
 int switchPin1 = 8;
 int switchPin2 = 9;
-int ledPin1 = 10;
+int ledPin1 = 12;
 int ledPin2 = 11;
 boolean lastButton1 = LOW;
 boolean lastButton2 = LOW;
