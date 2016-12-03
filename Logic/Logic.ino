@@ -2,20 +2,25 @@
 
 LiquidCrystal lcd(1, 2, 4, 5, 6, 7);
 
-int startStopSwitch = 8;
-int nextSwitch = 9;
+int switchNext = 9;
+int switchStart = 8;
 int filePosition = 0;
-boolean lastStartStop = LOW;
+boolean menuOn = true;
+boolean lastStart = LOW;
+boolean currentStart = LOW;
 boolean lastNext = LOW;
-boolean currentStartStop = LOW;
 boolean currentNext = LOW;
-String categories[] = {"Biology", "French", "Art", "thisissixteencha"};
-
+String categories[] = {"Biology", "French", "Art"};
+String words[3][3] = {
+  {"Frog", "Lizard", "Elephant"},
+  {"Bonjour", "Madam", "Jambon"},
+  {"Monet", "Renoir", "Rembrandt"}
+};
 
 void setup() {
 lcd.begin(16,2);
-pinMode(startStopSwitch, INPUT);
-pinMode(nextSwitch, INPUT);
+pinMode(switchStart, INPUT);
+pinMode(switchNext, INPUT);
 
 }
 
@@ -40,14 +45,35 @@ void menu(int selectedFile) {
   lcd.print(categories[selectedFile]);
 }
 
+//void playGame(int selectedFile) {
+//  lcd.clear();
+//  for (int i = 0, i < words[selectedFile][i].length(); i++){
+//  lcd.setCursor(centerValue(words[selectedFile][i]), 1);
+//  }
+//  
+//}
+
 void loop() {
+  if (menuOn) {
  menu(filePosition);
- currentNext = debounce(lastNext, nextSwitch);
+ currentNext = debounce(lastNext, switchNext);
  if (currentNext == HIGH && lastNext == LOW && filePosition < (sizeof(categories) / sizeof(String) - 1)) {
   filePosition++;
  } else if (currentNext == HIGH && lastNext == LOW && filePosition >= (sizeof(categories) / sizeof(String) - 1)) {
   filePosition = 0;
  }
+  } else {
+ lcd.clear();
+ lcd.setCursor(1, 0);
+ lcd.print("Main Loop ");
+ lcd.print(filePosition);
+  }
+  
+ currentStart = debounce(lastStart, switchStart);
+ if (currentStart == HIGH && lastStart == LOW) {
+  menuOn = false;
+ }
+
  delay(100);
 
 }
